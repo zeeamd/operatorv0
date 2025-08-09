@@ -8,3 +8,6 @@ code .
 go mod init v0
 #
 go run .
+
+# standard lib go
+https://pkg.go.dev/std
