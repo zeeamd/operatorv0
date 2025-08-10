@@ -41,4 +41,44 @@ func main() {
 
 	var y int = x
 	fmt.Println(y)
+
+	// iota starts at 0 within each const block increment by 1 with each constant
+	const (
+		m = 2 / 2
+		n = iota
+		l
+		p = 5
+		q
+	)
+	fmt.Println(m,n,l,p,q)
+
+	s := "S"
+
+	// creates a copy
+	s2 := s
+
+	s = "A"
+
+	// pointer
+	s3 := &s
+
+	fmt.Println(s,s2,*s3,s3)
+
+	var arr [3]int
+	fmt.Println(arr)
+
+	arr = [3]int{1,2}
+	fmt.Println(arr)
+
+	// slice doesn't need size unlike array
+	var sl []int
+	fmt.Println(sl)
+	sl = append(sl,1)
+	fmt.Println(sl)
+
+	// array - fixed size, slice/map - dynamic
+	var mp map[string]int
+	fmt.Println(mp)
+	mp = map[string]int{"a":1}
+	fmt.Println(mp["a"])
 }
