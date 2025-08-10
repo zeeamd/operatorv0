@@ -35,4 +35,10 @@ func main() {
 	c := a + b
 	d := a == b
 	fmt.Println(a,b,c,d)
+ 
+	// const can go unused
+	const x = 10
+
+	var y int = x
+	fmt.Println(y)
 }
