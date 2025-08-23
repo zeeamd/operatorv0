@@ -3,6 +3,10 @@ package main
 import "fmt"
 
 func main() {
+
+	// defer statements execute just before func exit when all statements done LIFO
+	defer fmt.Println("main 1")
+
 	//println("go v0")
 	fmt.Println("go v0")
 
@@ -81,4 +85,120 @@ func main() {
 	fmt.Println(mp)
 	mp = map[string]int{"a":1}
 	fmt.Println(mp["a"])
+
+	var mp2 map[string][]string
+	fmt.Println(mp2)
+
+	mp2 = map[string][]string{
+		"k1": {"v1"},
+	}
+	mp2["k2"] = []string{"v2"}
+	fmt.Println(mp2["k2"])
+
+	delete(mp2, "k2")
+     
+	// ok can be any name return boolean
+	v3, ok := mp2["k1"]
+	fmt.Println(v3, ok)
+
+	var s1 struct{
+		nm string
+		id int
+	}
+	fmt.Println(s1)
+	s1.nm = "Z"
+	fmt.Println(s1.nm)
+
+	type s4 struct{
+		nm string
+		id int
+	}
+	var v4 s4
+	fmt.Println(v4)
+
+	v4 = s4{
+		nm: "Z2",
+		id: 2,
+	}
+
+	// structs creates new copy on assignment (copy by value)
+	v5 := v4
+	v4.nm = "Z3"
+	fmt.Println(v4)
+	fmt.Println(v5)
+
+	// all loops in go are for with different forms
+
+	i := 1
+	for {
+		i += 2
+		fmt.Println(i)
+		break
+	}
+
+	for i<10 {
+		fmt.Println(i)
+		i++
+	}
+
+	for i2 :=1; i2<10; i2++ {
+		fmt.Println(i2)
+	}
+
+	// arrays, slices, maps
+	// can't loop struct if needed use reflection
+	// _, v _ is blanket identifier
+	a2 := []int{1,2,3}
+	for a,b := range a2{
+		fmt.Println(a,b)
+	}
+
+	// i3:=10 can even be declared in separate line
+	if i3:=10;i3<15 {
+		fmt.Println("less")
+	} else if i3>15 {
+		fmt.Println("more")
+	} else {
+		fmt.Println("na")
+	}
+
+	// true can be skipped by default it is true
+	// switch i:=8;true
+	switch i4:=8; {
+	case i4 < 10:
+		fmt.Println("less")
+	default:
+		fmt.Println("na")
+	}
+
+	defer fmt.Println("main 2")
+
+	// panic() built in func in go
+	// defer recover is use case to prevent prog from crashing
+
+	func1()
+
+}
+
+func func1() {
+    
+	fmt.Println("func1")
+
+	i := 10
+	if i < 20 {
+		goto zlabel
+	}
+	zlabel:
+	fmt.Println("label in func1")
+
+	// register recover before panic
+	// anonymous func
+	// if needed function named as func2 define it and then call
+	defer func() {
+		fmt.Println(recover())
+	}()
+
+	// here anything can be passed
+	panic("panic mode")
+	fmt.Println("func1 2")
 }
