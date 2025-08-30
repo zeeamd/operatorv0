@@ -58,6 +58,10 @@ regenerate Go code and update the CRD YAML files to reflect new spec
 #
 make generate
 #
+Edited podmakerv0_types.go - run above make generate
+#
+Added/removed CRD fields - - run above make generate
+#
 make manifests (generate crds)
 #
 internal/controller/podmakerv0_controller.go (implement controller logic here)

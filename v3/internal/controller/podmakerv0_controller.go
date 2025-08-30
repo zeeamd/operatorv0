@@ -53,14 +53,17 @@ type PodMakerv0Reconciler struct {
 // For more details, check Reconcile and its Result here:
 // - https://pkg.go.dev/sigs.k8s.io/controller-runtime@v0.21.0/pkg/reconcile
 func (r *PodMakerv0Reconciler) Reconcile(ctx context.Context, req ctrl.Request) (ctrl.Result, error) {
-	_ = logf.FromContext(ctx)
+	// _ = logf.FromContext(ctx)
 
 	// TODO(user): your logic here
+
+    log := log.FromContext(ctx)
+    log.Info("Reconciling PodMakerv0", "namespace", req.Namespace, "name", req.Name)
 
 	// Fetch the PodMakerv0 instance
     var podmaker z0v1.PodMakerv0
     if err := r.Get(ctx, req.NamespacedName, &podmaker); err != nil {
-        logger.Error(err, "unable to fetch PodMakerv0")
+        log.Error(err, "unable to fetch PodMakerv0")
         return ctrl.Result{}, client.IgnoreNotFound(err)
     }
 
@@ -83,14 +86,14 @@ func (r *PodMakerv0Reconciler) Reconcile(ctx context.Context, req ctrl.Request) 
     err := r.Get(ctx, types.NamespacedName{Name: pod.Name, Namespace: pod.Namespace}, existing)
     if err != nil && apierrors.IsNotFound(err) {
         // Pod doesn't exist, create it
-        logger.Info("Creating Pod", "name", pod.Name)
+        log.Info("Creating Pod", "name", pod.Name)
         if err := r.Create(ctx, pod); err != nil {
-            logger.Error(err, "failed to create Pod")
+            log.Error(err, "failed to create Pod")
             return ctrl.Result{}, err
         }
     } else if err != nil {
         // Unexpected error
-        logger.Error(err, "failed to get Pod")
+        log.Error(err, "failed to get Pod")
         return ctrl.Result{}, err
     }
 
