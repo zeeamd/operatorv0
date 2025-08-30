@@ -1,0 +1,4 @@
+## Append samples of your project ##
+resources:
+- z0_v1_podmakerv0.yaml
+# +kubebuilder:scaffold:manifestskustomizesamples
