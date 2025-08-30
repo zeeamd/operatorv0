@@ -65,4 +65,7 @@ Added/removed CRD fields - - run above make generate
 make manifests (generate crds)
 #
 internal/controller/podmakerv0_controller.go (implement controller logic here)
+#
+kubectl apply -f config/crd/bases/z0.v0.com_podmakerv0s.yaml
+
 
