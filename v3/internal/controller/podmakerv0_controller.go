@@ -24,7 +24,12 @@ import (
 	"sigs.k8s.io/controller-runtime/pkg/client"
 	logf "sigs.k8s.io/controller-runtime/pkg/log"
 
-	z0v1 "pod-operator/api/v1"
+	// z0v1 "pod-operator/api/v1"
+	corev1 "k8s.io/api/core/v1"
+    metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+    "k8s.io/apimachinery/pkg/types"
+    apierrors "k8s.io/apimachinery/pkg/api/errors"
+    z0v1 "github.com/zeeamd/operatorv0/v3/api/v1"
 )
 
 // PodMakerv0Reconciler reconciles a PodMakerv0 object
@@ -50,12 +55,43 @@ func (r *PodMakerv0Reconciler) Reconcile(ctx context.Context, req ctrl.Request) 
 	_ = logf.FromContext(ctx)
 
 	// TODO(user): your logic here
+
 	// Fetch the PodMakerv0 instance
-	var podmaker z0v1.PodMakerv0
-	if err := r.Get(ctx, req.NamespacedName, &podmaker); err != nil {
-	  logger.Error(err, "unable to fetch PodMakerv0")
-	  return ctrl.Result{}, client.IgnoreNotFound(err)
-          }
+    var podmaker z0v1.PodMakerv0
+    if err := r.Get(ctx, req.NamespacedName, &podmaker); err != nil {
+        logger.Error(err, "unable to fetch PodMakerv0")
+        return ctrl.Result{}, client.IgnoreNotFound(err)
+    }
+
+	// Define the desired Pod
+    pod := &corev1.Pod{
+        ObjectMeta: metav1.ObjectMeta{
+            Name:      podmaker.Spec.Name,
+            Namespace: req.Namespace,
+        },
+        Spec: corev1.PodSpec{
+            Containers: []corev1.Container{{
+                Name:  "main",
+                Image: podmaker.Spec.Image,
+            }},
+        },
+    }
+
+	// Check if the Pod already exists
+    existing := &corev1.Pod{}
+    err := r.Get(ctx, types.NamespacedName{Name: pod.Name, Namespace: pod.Namespace}, existing)
+    if err != nil && apierrors.IsNotFound(err) {
+        // Pod doesn't exist, create it
+        logger.Info("Creating Pod", "name", pod.Name)
+        if err := r.Create(ctx, pod); err != nil {
+            logger.Error(err, "failed to create Pod")
+            return ctrl.Result{}, err
+        }
+    } else if err != nil {
+        // Unexpected error
+        logger.Error(err, "failed to get Pod")
+        return ctrl.Result{}, err
+    }
 
 	return ctrl.Result{}, nil
 }
