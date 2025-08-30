@@ -84,7 +84,7 @@ Compiles the code (including all imports and dependencies)
 #
 ctrl + c (if on terminal operator stops no new reconcilation old ones remain)
 #
-Starts your operator — which:
+Starts operator
 #
 Initializes the controller-runtime manager
 #
