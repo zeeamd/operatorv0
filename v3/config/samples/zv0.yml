@@ -1,0 +1,8 @@
+# config/samples/z0_v1_podmakerv0.yaml
+apiVersion: z0.v0.com/v1
+kind: PodMakerv0
+metadata:
+  name: v0-podmaker
+spec:
+  name: hello-pod
+  image: nginx

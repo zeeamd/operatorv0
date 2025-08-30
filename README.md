@@ -67,5 +67,33 @@ make manifests (generate crds)
 internal/controller/podmakerv0_controller.go (implement controller logic here)
 #
 kubectl apply -f config/crd/bases/z0.v0.com_podmakerv0s.yaml
-
-
+#
+bash-5.2# pwd
+#
+/root/operatorv0/v3
+#
+bash-5.2# kubectl apply -f config/crd/bases/z0.v0.com_podmakerv0s.yaml
+#
+customresourcedefinition.apiextensions.k8s.io/podmakerv0s.z0.v0.com created
+#
+bash-5.2# go run ./cmd
+#
+Compiles the code (including all imports and dependencies)
+#
+ctrl + c (if on terminal operator stops no new reconcilation old ones remain)
+#
+Starts your operator — which:
+#
+Initializes the controller-runtime manager
+#
+Registers custom controller (PodMakerv0Reconciler)
+#
+Starts health probes and metrics endpoints
+#
+Begins watching for PodMakerv0 resources in the cluster
+#
+kubectl apply -f v3/config/samples/zv0.yml
+#
+Operator(creates pod) - A packaged application that includes one or more controllers
+#
+Controller - The actual logic that watches resources and takes action (like Pod creation)
