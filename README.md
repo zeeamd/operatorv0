@@ -16,6 +16,8 @@ https://pkg.go.dev/std
 /mnt/c/Users/lenovo/Downloads/VSCode-win32-x64-1.87.2/code.exe "$@"
 
 # 
+aws eks update-kubeconfig --name v0
+#
 $env:GIT_SSL_NO_VERIFY = "true"
 #
 curl -LO https://github.com/operator-framework/operator-sdk/releases/latest/download/operator-sdk_linux_amd64
