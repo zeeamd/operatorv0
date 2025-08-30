@@ -24,12 +24,12 @@ import (
 	"sigs.k8s.io/controller-runtime/pkg/client"
 	logf "sigs.k8s.io/controller-runtime/pkg/log"
 
-	// z0v1 "pod-operator/api/v1"
+	z0v1 "pod-operator/api/v1"
 	corev1 "k8s.io/api/core/v1"
     metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
     "k8s.io/apimachinery/pkg/types"
     apierrors "k8s.io/apimachinery/pkg/api/errors"
-    z0v1 "github.com/zeeamd/operatorv0/v3/api/v1"
+    // z0v1 "github.com/zeeamd/operatorv0/v3/api/v1"
 )
 
 // PodMakerv0Reconciler reconciles a PodMakerv0 object
