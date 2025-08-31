@@ -7,6 +7,7 @@ rules:
 - apiGroups:
   - z0.v0.com
   resources:
+  - deploymakerv0s
   - podmakerv0s
   verbs:
   - create
@@ -19,12 +20,14 @@ rules:
 - apiGroups:
   - z0.v0.com
   resources:
+  - deploymakerv0s/finalizers
   - podmakerv0s/finalizers
   verbs:
   - update
 - apiGroups:
   - z0.v0.com
   resources:
+  - deploymakerv0s/status
   - podmakerv0s/status
   verbs:
   - get
