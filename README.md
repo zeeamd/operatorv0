@@ -112,4 +112,7 @@ make manifests
 #
 kubectl apply -f config/crd/bases/z0.v0.com_deploymakerv0s.yaml
 #
+go run ./cmd
+#
+kubectl apply -f config/samples/zv1.yaml
 
