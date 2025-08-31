@@ -104,3 +104,5 @@ wget https://go.dev/dl/go1.21.0.linux-amd64.tar.gz
 #
 export PATH=$PATH:/usr/local/go/bin
 #
+operator-sdk create api --group=z0 --version=v1 --kind=DeployMakerv0 --resource --controller --force
+#
