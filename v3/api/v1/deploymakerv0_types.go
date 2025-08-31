@@ -31,7 +31,7 @@ type DeployMakerv0Spec struct {
 	// Foo is an example field of DeployMakerv0. Edit deploymakerv0_types.go to remove/update
 	// Foo string `json:"foo,omitempty"`
 
-	Replicas int32 `json:"replicas"`
+	Replicas *int32 `json:"replicas"`
     Image    string `json:"image"`
 }
 

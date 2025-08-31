@@ -28,11 +28,11 @@ import (
 
 	"sigs.k8s.io/controller-runtime/pkg/log"
 	"k8s.io/apimachinery/pkg/types"
-    "k8s.io/apimachinery/pkg/api/errors"
+    // "k8s.io/apimachinery/pkg/api/errors"
     metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
     corev1 "k8s.io/api/core/v1"
 	appsv1 "k8s.io/api/apps/v1"
-    "sigs.k8s.io/controller-runtime/pkg/controller/controllerutil"
+    // "sigs.k8s.io/controller-runtime/pkg/controller/controllerutil"
 )
 
 // DeployMakerv0Reconciler reconciles a DeployMakerv0 object
@@ -74,17 +74,17 @@ func (r *DeployMakerv0Reconciler) Reconcile(ctx context.Context, req ctrl.Reques
 
     deployment := &appsv1.Deployment{
         ObjectMeta: metav1.ObjectMeta{
-            Name:      deployMaker.Spec.Name,
+            Name:      deployMaker.Name,
             Namespace: req.Namespace,
         },
         Spec: appsv1.DeploymentSpec{
             Replicas: &replicas,
             Selector: &metav1.LabelSelector{
-                MatchLabels: map[string]string{"app": deployMaker.Spec.Name},
+                MatchLabels: map[string]string{"app": deployMaker.Name},
             },
             Template: corev1.PodTemplateSpec{
                 ObjectMeta: metav1.ObjectMeta{
-                    Labels: map[string]string{"app": deployMaker.Spec.Name},
+                    Labels: map[string]string{"app": deployMaker.Name},
                 },
                 Spec: corev1.PodSpec{
                     Containers: []corev1.Container{{
