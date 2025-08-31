@@ -99,3 +99,8 @@ kubectl apply -f v3/config/samples/zv0.yml
 Operator(creates pod) - A packaged application that includes one or more controllers
 #
 Controller - The actual logic that watches resources and takes action (like Pod creation)
+#
+wget https://go.dev/dl/go1.21.0.linux-amd64.tar.gz
+#
+export PATH=$PATH:/usr/local/go/bin
+#
