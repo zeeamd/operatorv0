@@ -1,0 +1,9 @@
+apiVersion: z0.v0.com/v1
+kind: DeployMakerv0
+metadata:
+  labels:
+    app.kubernetes.io/name: v3
+    app.kubernetes.io/managed-by: kustomize
+  name: deploymakerv0-sample
+spec:
+  # TODO(user): Add fields here

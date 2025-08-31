@@ -20,4 +20,13 @@ resources:
   kind: PodMakerv0
   path: pod-operator/api/v1
   version: v1
+- api:
+    crdVersion: v1
+    namespaced: true
+  controller: true
+  domain: v0.com
+  group: z0
+  kind: DeployMakerv0
+  path: pod-operator/api/v1
+  version: v1
 version: "3"

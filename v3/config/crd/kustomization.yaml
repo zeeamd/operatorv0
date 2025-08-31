@@ -3,6 +3,7 @@
 # It should be run by config/default
 resources:
 - bases/z0.v0.com_podmakerv0s.yaml
+- bases/z0.v0.com_deploymakerv0s.yaml
 # +kubebuilder:scaffold:crdkustomizeresource
 
 patches:
