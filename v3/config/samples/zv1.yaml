@@ -7,5 +7,5 @@ metadata:
   name: deploymakerv0-sample
 spec:
   # TODO(user): Add fields here
-  Image: nginx
-  Replicas: 2
+  image: nginx
+  replicas: 2
