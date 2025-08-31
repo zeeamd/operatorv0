@@ -106,3 +106,10 @@ export PATH=$PATH:/usr/local/go/bin
 #
 operator-sdk create api --group=z0 --version=v1 --kind=DeployMakerv0 --resource --controller --force
 #
+make generate
+#
+make manifests
+#
+kubectl apply -f config/crd/bases/z0.v0.com_deploymakerv0s.yaml
+#
+
