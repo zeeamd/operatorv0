@@ -25,6 +25,12 @@ import (
 	logf "sigs.k8s.io/controller-runtime/pkg/log"
 
 	z0v1 "pod-operator/api/v1"
+
+	"sigs.k8s.io/controller-runtime/pkg/log"
+	"k8s.io/apimachinery/pkg/types"
+    "k8s.io/apimachinery/pkg/api/errors"
+	appsv1 "k8s.io/api/apps/v1"
+    "sigs.k8s.io/controller-runtime/pkg/controller/controllerutil"
 )
 
 // DeployMakerv0Reconciler reconciles a DeployMakerv0 object
@@ -50,6 +56,56 @@ func (r *DeployMakerv0Reconciler) Reconcile(ctx context.Context, req ctrl.Reques
 	_ = logf.FromContext(ctx)
 
 	// TODO(user): your logic here
+
+	log := log.FromContext(ctx)
+
+    var deployMaker z0v1.DeployMakerv0
+    if err := r.Get(ctx, req.NamespacedName, &deployMaker); err != nil {
+        log.Error(err, "unable to fetch DeployMakerv0")
+        return ctrl.Result{}, client.IgnoreNotFound(err)
+    }
+
+    replicas := int32(1)
+    if deployMaker.Spec.Replicas != nil && *deployMaker.Spec.Replicas > 0 {
+        replicas = *deployMaker.Spec.Replicas
+    }
+
+    deployment := &appsv1.Deployment{
+        ObjectMeta: metav1.ObjectMeta{
+            Name:      deployMaker.Spec.Name,
+            Namespace: req.Namespace,
+        },
+        Spec: appsv1.DeploymentSpec{
+            Replicas: &replicas,
+            Selector: &metav1.LabelSelector{
+                MatchLabels: map[string]string{"app": deployMaker.Spec.Name},
+            },
+            Template: corev1.PodTemplateSpec{
+                ObjectMeta: metav1.ObjectMeta{
+                    Labels: map[string]string{"app": deployMaker.Spec.Name},
+                },
+                Spec: corev1.PodSpec{
+                    Containers: []corev1.Container{{
+                        Name:  "main",
+                        Image: deployMaker.Spec.Image,
+                    }},
+                },
+            },
+        },
+    }
+
+    existing := &appsv1.Deployment{}
+    err := r.Get(ctx, types.NamespacedName{Name: deployment.Name, Namespace: deployment.Namespace}, existing)
+    if err != nil && apierrors.IsNotFound(err) {
+        log.Info("Creating Deployment", "name", deployment.Name)
+        if err := r.Create(ctx, deployment); err != nil {
+            log.Error(err, "failed to create Deployment")
+            return ctrl.Result{}, err
+        }
+    } else if err != nil {
+        log.Error(err, "failed to get Deployment")
+        return ctrl.Result{}, err
+    }
 
 	return ctrl.Result{}, nil
 }

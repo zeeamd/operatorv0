@@ -29,7 +29,10 @@ type DeployMakerv0Spec struct {
 	// Important: Run "make" to regenerate code after modifying this file
 
 	// Foo is an example field of DeployMakerv0. Edit deploymakerv0_types.go to remove/update
-	Foo string `json:"foo,omitempty"`
+	// Foo string `json:"foo,omitempty"`
+
+	Replicas int32 `json:"replicas"`
+    Image    string `json:"image"`
 }
 
 // DeployMakerv0Status defines the observed state of DeployMakerv0.
